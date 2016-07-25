@@ -1,0 +1,17 @@
+<table>
+<tr>
+  <th>Product Name</th>
+  <th>Description</th>
+  <th>Price</th>
+<tr>
+
+<tr><td><%= product.name %></td></tr>
+<tr><td><%= product.description %></td></tr>
+<tr><td><%= product.price %></td></tr>
+</table>
+ 
+<p>
+  <%= link_to 'Remove Product', [product.category, product],
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>
+</p>

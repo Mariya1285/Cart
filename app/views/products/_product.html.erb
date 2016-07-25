@@ -1,0 +1,21 @@
+<table border="1">
+<tr>
+  <th>Product Name</th>
+  <th>Description</th>
+  <th>Price</th>
+<tr>
+
+<tr>
+    <td><%= product.name %></td>
+    <td><%= product.description %></td>
+    <td><%= product.price %></td>
+</tr>
+</table>
+ 
+<p>
+  <%= link_to 'Remove Product', [product.category, product],
+               method: :delete,
+               data: { confirm: 'Are you sure?' } %>
+
+  <%= link_to 'Add to Cart', new_selected_product_path %>
+</p>
