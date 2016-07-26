@@ -5,12 +5,17 @@ class ProductsController < ApplicationController
     @product = Product.all
   end
 
+  def show
+    @product = Product.find(params[:id])
+  end
+
   def new
     @product = Product.new
+  end
 
 	def create
     @product = Product.new(product_params)
-    
+    #@product.categories = params[:categories]
     if @product.save
       redirect_to @product
     else
@@ -19,11 +24,15 @@ class ProductsController < ApplicationController
 
   end
  
+ def edit
+    @product = Product.find(params[:id])
+  end
+
   def update
-    @category = Category.find(params[:id])
+    @product = Product.find(params[:id])
    
-    if @category.update(category_params)
-      redirect_to @category
+    if @product.update(product_params)
+      redirect_to @product
     else
       render 'edit'
     end

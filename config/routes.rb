@@ -73,6 +73,6 @@ Rails.application.routes.draw do
   devise_for :users,:controllers => { :registrations =>'registration'}
   #get 'dashboard' => 'home#dashboard'
 
-  root :to =>'home#index'
+  root :to =>'products#index'
   #root 'categories#new'
 end

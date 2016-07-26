@@ -1,5 +1,11 @@
 source 'https://rubygems.org'
 
+gem "paperclip", "~> 5.0.0"
+
+gem "therubyracer"
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem "twitter-bootstrap-rails"
+
 gem 'devise', '3.4.1'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'

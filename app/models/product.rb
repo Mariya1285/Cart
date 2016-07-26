@@ -10,7 +10,8 @@ class Product < ActiveRecord::Base
   validates :price, presence: true,
   									numericality: { :greater_than => 0 }
 
-  validates :img, presence:true
+  has_attached_file :img, styles: { medium: "300x300>", thumb: "100x100>" }
+  validates_attachment_content_type :img, content_type: /\Aimage\/.*\Z/
 
                       
 end
