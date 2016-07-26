@@ -41,7 +41,9 @@ def destroy
   redirect_to categories_path
 end
 
-
+def user
+current_user
+end
 	private
   def category_params
     params.require(:category).permit(:name)

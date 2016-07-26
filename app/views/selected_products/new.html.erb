@@ -1,0 +1,29 @@
+  <p>
+  <strong>Name:</strong>
+    <%=@p.name %>
+  </p>
+  
+  <p>
+    <strong>Description:</strong>
+    <%=@p.description %>
+  </p>
+  
+  <p>
+    <strong>Price:</strong>
+    <%= @p.price %>
+  </p>
+ 
+  <p>
+    <strong>Image:</strong>
+    <%= image_tag @p.img.url %>
+  </p>
+  
+  <p>
+  <%= form_tag "/selected_products" do %>
+  <%= text_field_tag "quantity" %>
+  <%= submit_tag "Add" %>
+  <% end %>
+ </p>
+
+  
+<%= link_to 'List Of products', products_path %>  

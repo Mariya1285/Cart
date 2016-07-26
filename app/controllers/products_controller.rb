@@ -15,8 +15,15 @@ class ProductsController < ApplicationController
 
 	def create
     @product = Product.new(product_params)
-    #@product.categories = params[:categories]
+    #categories = Array.new(params.require(:product).permit(:categories))
+    #@product.categories||= Array.new
     if @product.save
+      #@product.categories.create(params[:product][:categories])
+      #categories.each do |c|
+          #@product.categories << categories.create(params.require(:product).permit(:categories))
+         #@product.categories.create(params.require(:product).permit(:categories))
+      #end
+     # @product.categories << params.require(:product).permit(:categories)
       redirect_to @product
     else
       render 'new'

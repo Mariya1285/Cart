@@ -21,7 +21,7 @@
   <p>
     <%= f.label :category %><br>
 
- <%= f.select :categories, (Category.all.map { |category| [category.name, category.id] }), include_blank: true %>
+ <%= f.select :categories, Category.all.map { |category| [category.name, category.id] }, include_blank: true %>
 
 </p>
   </p>
