@@ -1,9 +1,14 @@
 
-<select>
-  <% categories_array = Category.all.map { |category| [category.name, category.id] } %>
-  <%= options_for_select(categories_array) %>
-</select> 
-  
+<% form_tag url_for(:controller => 'products', :action => 'products_sync'), :method => 'post'%>
+  <% @category = Category.all %>
+
+  <%= select_tag "category_id", options_from_collection_for_select(@category, "id", "name") %>
+
+  <%= submit_tag nil, :class => "form_submit"%>
+
+
+
+    
 <%if Product.all.count != 0%>
 <h1>Products</h1>
 <table class="table">

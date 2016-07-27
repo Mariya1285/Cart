@@ -1,6 +1,10 @@
 class ProductsController < ApplicationController
 
 
+  def products_sync
+
+  end 
+  
   def index
     @product = Product.all
   end
@@ -15,15 +19,12 @@ class ProductsController < ApplicationController
 
 	def create
     @product = Product.new(product_params)
-    #categories = Array.new(params.require(:product).permit(:categories))
-    #@product.categories||= Array.new
+
+    params[:product][:categories].delete_at(0)
+    
+    @product.categories << Category.find(params[:product][:categories].map(&:to_i))
+
     if @product.save
-      #@product.categories.create(params[:product][:categories])
-      #categories.each do |c|
-          #@product.categories << categories.create(params.require(:product).permit(:categories))
-         #@product.categories.create(params.require(:product).permit(:categories))
-      #end
-     # @product.categories << params.require(:product).permit(:categories)
       redirect_to @product
     else
       render 'new'

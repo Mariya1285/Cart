@@ -1,5 +1,10 @@
 <%if SelectedProduct.all.count != 0%>
-<h1>Cart</h1>
+<div>
+  <h1>Cart</h1>
+  <h4 style="float:right !important"><%= link_to 'Place an order', orders_path,
+                method: :post,
+                data: { confirm: 'Are you sure?' } %></h4>
+<div>
 <table class="table">
   <thead>
     <tr>
@@ -13,25 +18,34 @@
   </thead>
  <tbody>
   <% SelectedProduct.all.each do |product| %>
+  <% if product.user_id == current_user.id %>
     <% s = Product.find(product.product_id)%>
-    <tr>
-      <td><%= s.name %></td>
-      <td><%= s.description %></td>
-      <td><%= image_tag s.img.url %></td>
-      <td><%= s.price %></td>
-      <td>1</td>
+      <tr>
+        <td><%= s.name %></td>
+        <td><%= s.description %></td>
+        <td><%= image_tag s.img.url %></td>
+        <td><%= s.price %></td>
+        
+        <td>
+            <%= form_for :selected_product, :url => selected_product_path(id: product), method: :put do |f| %>
+                <div class="field">
+                    <%= f.number_field :quantity, :value => product.quantity %>
+                    <%= submit_tag "Update" %>
+                </div>
+            <% end %>
 
-      
-      <% if user_signed_in? %>
-        <% if current_user.is_admin == true %>
-        <%= link_to 'Edit', edit_selected_product_path(product) %>&nbsp &nbsp
-        <%= link_to 'Remove', selected_product_path(product),
-                method: :delete,
-                data: { confirm: 'Are you sure?' } %></td>
+        </td>
+        
+        <% if user_signed_in? %>
+          <td>
+          <%= link_to 'Edit', edit_selected_product_path(product) %>&nbsp &nbsp
+          <%= link_to 'Remove', selected_product_path(product),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' } %></td>
+          
         <% end %>
-      <% end %>
-    </tr>
-  
+      </tr>
+    <% end %>
   <% end %>
 <tbody>
 </table>

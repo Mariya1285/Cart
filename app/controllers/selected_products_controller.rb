@@ -32,6 +32,28 @@ class SelectedProductsController < ApplicationController
 	  end
 	end
 
+	def edit
+
+	end
+
+	def update
+		@selected_product = SelectedProduct.find(params[:id])
+	 
+	  if @selected_product.update(params.require(:selected_product).permit(:quantity))
+	    render 'index'
+	  else
+	    render 'edit'
+	  end
+	end 
+
+	def destroy
+	  
+	  @selected_product = SelectedProduct.find(params[:id])
+	  
+	  @selected_product.destroy
+	 
+		render  'index'
+	end
 		
 	private
   def selected_product_params

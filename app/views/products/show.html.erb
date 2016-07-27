@@ -20,8 +20,8 @@
 
 <p>
   <strong>Category:</strong>
-  <%= @product.categories.each do |c| %>
-    <%= c %>
+  <% @product.categories.each do |c| %>
+    <%= c.name %><br/>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
   <% end %>
 
 </p>
