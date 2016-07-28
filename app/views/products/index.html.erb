@@ -1,49 +1,109 @@
+<%= render 'products/products_sync' %> 
 
-<% form_tag url_for(:controller => 'products', :action => 'products_sync'), :method => 'post'%>
-  <% @category = Category.all %>
+<% if params[:categories] != nil %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th colspan="3" align="centre">Links</th>
+      </tr>
+    </thead>
+   <tbody>
+    <% @flag_sync = false %>
+    <% Product.all.each do |product|%>
+      
+      <% if product.categories.count != 0 %>
 
-  <%= select_tag "category_id", options_from_collection_for_select(@category, "id", "name") %>
+        
+      
+        <% product.categories.each do |category| %>
+         
+          <% if  category.id == params[:categories].to_i %>
+            <% @flag_sync = true %>  
+            <tr>
+              <td><%= product.name %></td>
+              <td><%= product.description %></td>
+              <td><%= image_tag product.img.url %></td>
+              <td><%= product.price %></td>
+              <td><%= link_to 'Show', product_path(product) %>&nbsp &nbsp 
+              <% if user_signed_in? %>
+                <% if current_user.is_admin == true %>
+                <%= link_to 'Edit', edit_product_path(product) %>&nbsp &nbsp
+                <%= link_to 'Destroy', product_path(product),
+                        method: :delete,
+                        data: { confirm: 'Are you sure?' } %></td>
+                <% end %>
+              <% end %>
+            </tr>
 
-  <%= submit_tag nil, :class => "form_submit"%>
+          <% end %>
+        
+        <%  end %>
+      
+      <%  end %>
 
+    <% end %>
+    <% if @flag_sync == false %>
+        <script type="text/javascript">
+          window.location.href="/"  // put your correct path in a string here
+        </script>
+    <% end %>
+    </tbody>
+  </table>
 
-
-    
-<%if Product.all.count != 0%>
-<h1>Products</h1>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Image</th>
-      <th>Price</th>
-      <th colspan="3" align="centre">Links</th>
-    </tr>
-  </thead>
- <tbody>
-  <% Product.all.each do |product| %>
-    
-    <tr>
-      <td><%= product.name %></td>
-      <td><%= product.description %></td>
-      <td><%= image_tag product.img.url %></td>
-      <td><%= product.price %></td>
-      <td><%= link_to 'Show', product_path(product) %>&nbsp &nbsp 
-      <% if user_signed_in? %>
-        <% if current_user.is_admin == true %>
-        <%= link_to 'Edit', edit_product_path(product) %>&nbsp &nbsp
-        <%= link_to 'Destroy', product_path(product),
-                method: :delete,
-                data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      <% end %>
-    </tr>
-  
-  <% end %>
-<tbody>
-</table>
 
 <% end %>
-<%= link_to 'New Product', new_product_path %> &nbsp &nbsp | &nbsp &nbsp 
-<%= link_to 'New Category', new_category_path %>
+
+
+
+
+<%if Product.all.count != 0 && params[:categories] == nil%>
+  <h1>Products</h1>
+  <% if user_signed_in? %>
+      <% if current_user.is_admin == true %>
+        <div  align="right" style="font-size:125%">
+          <%= link_to 'Add Product', new_product_path %> &nbsp &nbsp | &nbsp &nbsp 
+          <%= link_to 'Add Category', new_category_path %>&nbsp &nbsp | &nbsp &nbsp 
+          <%= link_to 'List Categories', categories_path %>
+        </div>
+      <% end %>
+  <% end %>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Price</th>
+        <th colspan="3" align="centre">Links</th>
+      </tr>
+    </thead>
+   <tbody>
+    <% Product.all.each do |product| %>
+      
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.description %></td>
+        <td><%= image_tag product.img.url %></td>
+        <td><%= product.price %></td>
+        <td><%= link_to 'Show', product_path(product) %>&nbsp &nbsp 
+        <% if user_signed_in? %>
+          <% if current_user.is_admin == true %>
+          <%= link_to 'Edit', edit_product_path(product) %>&nbsp &nbsp
+          <%= link_to 'Destroy', product_path(product),
+                  method: :delete,
+                  data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        <% end %>
+      </tr>
+    
+    <% end %>
+  <tbody>
+  </table>
+
+  <% end %>
+

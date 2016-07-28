@@ -1,43 +1,42 @@
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
- 
-<p>
-  <strong>Description:</strong>
-  <%= @product.description %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= @product.price %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @product.img.url %>
-</p>
-
-<p>
-  <strong>Category:</strong>
-  <% @product.categories.each do |c| %>
-    <%= c.name %><br/>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
-  <% end %>
-
-</p>
-
-
-
 <% if user_signed_in? %>
   <% if current_user.is_admin == true %>
   <%= link_to 'Edit', edit_product_path(@product) %>  |
   <%= link_to 'Destroy', product_path(@product),
                 method: :delete,
                 data: { confirm: 'Are you sure?' } %> |
-  
+  <% else %>
   <%= link_to 'Add to cart', selected_products_path(@product),
                 method: :post,
                 data: { confirm: 'Are you sure?' }%>  |
   <% end %>
 <% end %> 
   <%= link_to 'List Of products', products_path %>  
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Image</th>
+      <th>Price</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+  <tbody>
+     
+    <tr>
+      <td><%=@product.name %></td>
+      <td><%=@product.description %></td>
+      <td><%=image_tag @product.img.url %></td>
+      <td><%=@product.price %></td>
+      <td><% @product.categories.each do |c| %>
+          <%= c.name %><br/><% end %>
+      </td>
+      
+    </tr>
+  
+  <tbody>
+</table>
+
+

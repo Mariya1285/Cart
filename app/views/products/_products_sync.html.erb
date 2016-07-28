@@ -1,0 +1,8 @@
+<%=form_tag(products_sync_path, :method => 'get')%>
+  <% @category = Category.all %>
+
+  <%= select_tag "categories", options_from_collection_for_select(@category, "id", "name",params[:categories]),{:include_blank => 'All'}%>
+
+<%= submit_tag nil, :class => "form_submit"%>
+
+ 

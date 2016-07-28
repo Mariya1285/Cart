@@ -1,5 +1,11 @@
 class OrdersController < ApplicationController
 
+
+	def index
+		@order = Order.all
+
+	end
+
 	def new
 		@order = Order.new
 	end
@@ -25,7 +31,8 @@ class OrdersController < ApplicationController
  			
 
 	    #redirecting to list of order items
-	  	redirect_to order_order_items_path(@order.id) 	
+	  	#redirect_to order_order_items_path(@order.id) 
+	  	redirect_to orders_path(@order.id)	
  		
  		else
 	    render 'new'

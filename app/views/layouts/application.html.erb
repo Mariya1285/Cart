@@ -1,3 +1,25 @@
+<% if user_signed_in? %>
+<!-- Checking if the cart is empty -->
+<% SelectedProduct.all.each do |product| %>
+  <% if product.user_id == current_user.id %>
+  <% @flag = true%>
+  <% end %>
+<% end %>
+
+<!-- Checking if the order for the user present? -->
+<% Order.all.each do |order| %>
+
+  <% if order.user_id == current_user.id %>
+  <% @flag_for_order = true%>
+  <% end %>
+<% end %>
+
+<% end %>
+    
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -59,8 +81,14 @@
               <li><%= link_to "Sign Out", destroy_user_session_path , :method => :delete %></li>
               <li><%= link_to "Sign Up", new_user_registration_path  %></li>
               <li><%= link_to "Home", root_path  %></li>
+              
+              <% if @flag == true %>
               <li><%= link_to "Your Cart", selected_products_path  %></li>
-
+              <% end %>
+              <% if @flag_for_order == true %>
+              <li><%= link_to "Your Orders", orders_path  %></li>
+              <% end %>
+            
             <% else %>
 
               <li><%= link_to "Sign In", new_user_session_path  %></li>
@@ -100,3 +128,5 @@
 
   </body>
 </html>
+
+

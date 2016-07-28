@@ -2,9 +2,15 @@ class ProductsController < ApplicationController
 
 
   def products_sync
-
-  end 
+    
   
+
+          render :action => "index",:id=>params[:categories].to_i
+
+
+       
+  end 
+ 
   def index
     @product = Product.all
   end
@@ -38,7 +44,10 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-   
+    
+    params[:product][:categories].delete_at(0)
+    @product.categories << Category.find(params[:product][:categories].map(&:to_i))
+
     if @product.update(product_params)
       redirect_to @product
     else

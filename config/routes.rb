@@ -69,6 +69,9 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  #map.connect '/products/index', :controller => 'products', :action => 'products_sync'
+
+  get 'products_sync' => "products#products_sync"
 
   devise_for :users,:controllers => { :registrations =>'registration'}
   #get 'dashboard' => 'home#dashboard'

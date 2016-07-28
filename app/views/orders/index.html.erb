@@ -1,0 +1,43 @@
+<% Order.all.each do |user_order|%>
+  <% if user_order.user_id == current_user.id %>
+    <% @total_cost = 0 %>
+    <% @id = user_order.id%>
+    <% OrderItem.all.each do |order_item| %>
+        
+        <%if order_item.order_id == user_order.id%>
+          <% @total_cost += (order_item.price*order_item.quantity) %>
+        <% end %>
+    <% end %>
+
+    <table class="table">
+  <thead align="center">
+    <tr>
+      <th colspan="5">Order</td>
+    </tr>
+    <tr>
+      <th>Order Id</th>
+      <th>Total Cost</th>
+      <th>Status</th>
+      <th>Date of Order</th>
+      <th>Links</th>
+      
+      
+    </tr>
+  </thead>
+ <tbody>
+  
+      <tr>
+        <td><%=user_order.id %></td>
+        <td><%=@total_cost %></td>
+        <td><%=user_order.status %></td>
+        <td><%=user_order.created_at %></td>
+        <td><%= link_to 'Order Items',order_order_items_path(@id)%></td>
+      </tr>
+    <% end %>
+  <% end %>
+<tbody>
+</table>
+
+
+
+

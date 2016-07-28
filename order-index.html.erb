@@ -1,0 +1,40 @@
+
+
+
+<% @total_cost = 0 %>
+<% @id = params[:format]%>
+<% OrderItem.all.each do |order| %>
+    
+    <%if order.order_id == params[:format].to_i%>
+      <% @total_cost += (order.price*order.quantity) %>
+    <% end %>
+<% end %>
+
+<h1>Order</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Order Id</th>
+      <th>Total Cost</th>
+      <th>Status</th>
+      <th>Links</th>
+      
+      
+    </tr>
+  </thead>
+ <tbody>
+  <% Order.all.each do |order| %>
+   
+    <%if order.id == params[:format].to_i%>
+      
+      <tr>
+        <td><%=order.id %></td>
+        <td><%=@total_cost %></td>
+        <td><%=order.status %></td>
+        <td><%= link_to 'Order Items',order_order_items_path(@id)%></td>
+      </tr>
+    <% end %>
+  <% end %>
+<tbody>
+</table>
