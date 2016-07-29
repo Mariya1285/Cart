@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-
+  default_url_options :host => "localhost:3000"
   
   resources :categories 
   resources :products
@@ -71,6 +71,7 @@ Rails.application.routes.draw do
 
   #map.connect '/products/index', :controller => 'products', :action => 'products_sync'
 
+  
   get 'products_sync' => "products#products_sync"
 
   devise_for :users,:controllers => { :registrations =>'registration'}

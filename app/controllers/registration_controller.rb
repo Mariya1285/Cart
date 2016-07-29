@@ -1,34 +1,36 @@
 class RegistrationController < Devise::RegistrationsController
 
-def new
+	def new
 
-@user= User.new
+	@user= User.new
 
-end
+	end
 
-def create
+	def create
 
-@user = User.new
-@user.username = params[:user][:username]
-@user.age = params[:user][:age]
-@user.mobile = params[:user][:mobile]
-@user.country = params[:user][:country]
-@user.address = params[:user][:address]
-@user.postal_code = params[:user][:postal_code]
-@user.email = params[:user][:email]
-@user.password = params[:user][:password]
-@user.password_confirmation =params[:user][:password_confirmation]
+		@user = User.new(user_params)
 
+		@user.valid?
+		
+		if @user.errors.blank?
 
-@user.valid?
-if @user.errors.blank?
+			@user.save
 
-@user.save
+			redirect_to "/"
+		else
+			render :action => "new"
+		end
+	end
 
-redirect_to "/"
-else
-render :action => "new"
-end
-end
+	protected
+	  def after_inactive_sign_up_path_for(resource)
+	        '/sign_up/inactive'
+	  end
 
-end
+	private
+
+		def user_params
+	      params.require(:user).permit(:username, :age, :mobile, :country, :address, :postal_code, :email, :password, :password_confirmation)
+	     
+	 	 end
+	end
